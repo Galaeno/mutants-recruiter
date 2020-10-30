@@ -1,0 +1,11 @@
+db
+node_modules
+dist
+docs
+tests
+.dockerignore
+Dockerfile
+docker-compose.yml
+README.md
+nodemon.json
+tsconfig.json

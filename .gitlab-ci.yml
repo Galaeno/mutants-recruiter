@@ -1,0 +1,25 @@
+image: node:12.19.0
+
+stages:
+  - environment
+  - tests
+
+check-environment:
+  stage: environment
+  script:
+  - "node -v"
+  - "git --version"
+  only:
+  - pushes
+
+test-back:
+  stage: tests
+  dependencies:
+  - check-environment
+  before_script:
+  - "rm -rf node_modules"
+  - "npm i"
+  script:
+  - "npm run test:ci"
+  only:
+  - pushes

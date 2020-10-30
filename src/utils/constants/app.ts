@@ -1,0 +1,1 @@
+export const PORT: number | string = process.env.PORT || 1986;
