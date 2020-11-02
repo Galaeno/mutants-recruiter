@@ -59,7 +59,7 @@ export const dnaValidator = (dna: string[]): DnaValidator => {
     }
 
     // Chequea que todas las columnas y filas tengan la misma cantidad que column y row
-    if (dna[0].length !== column || dna.length !== row) {
+    if (dna[0].length !== row || dna.length !== column) {
       result.dnaOk = false;
       result.message = `El DNA no posee la cantidad de columnas (${dna.length} de ${column}) y/o filas (${dna[0].length} de ${row}) esperadas`;
       return result;
