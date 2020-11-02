@@ -67,7 +67,43 @@ Test-Automáticos, Code coverage > 80%.
 
 # Configuracion
 - Se debe configurar las variables de entorno para desarrollo, para eso, se deberá crear el archivo `.env` en el directorio raiz tomando como ejemplo el archivo `.envExample`.
-- Existe un archivo de configuración llamado `app.config.ts` que es para setear cómo se quiere que la aplicación funciona en base a unos parámetros de configuración.
+- Existe un archivo de configuración llamado `app.config.ts` que es para setear cómo se quiere que la aplicación funciona en base a unos parámetros de configuración. MEdiante ésta archivo se puede modificar el comportamiento de la aplicacion:
+```javascript
+  /* Tipos de servers a utilizar disponibles:
+   * - restify
+   * - fastify
+   * - express
+   */
+  server: 'restify',
+
+  /* Cómo se realizará la persistencia de la información:
+   * - mongoose
+   * - (string vacio) no se realizará persistencia. 
+   */
+  persistence: 'mongoose'
+
+  /* Cómo serán las dimensiones esperadas de la cadena de ADN;
+   * - column: 0 a n
+   * - row: 0 a n
+   */
+  dnaDimensions: {
+    column: 6,
+    row: 6
+  },
+
+  /* Cadena de letras esperadas. */
+  dnaWords: ['A', 'C', 'G', 'T'],
+
+  /* Cantidad de letras en secuencia para determinar qué tipo de ADN es */
+  dnaSequenceWords: 4,
+
+  /* Especificará si es en modo estricta la cadena de ADN.
+   * Esto permite que se realice una comprobacion en base a si hay letras que no se encuentran en dnaWords y/o si
+   * no coinciden todas las files y/o columnas maximas establecidas en dnaDimensions:
+   * true o false 
+   */
+  dnaStrictMode: true
+```
 
 # Ejecución en desarrollo
 - En ruta raíz del proyecto:

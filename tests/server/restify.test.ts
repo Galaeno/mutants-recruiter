@@ -42,7 +42,7 @@ describe('Servidor Restify', () => {
 
 describe('Servidor Restify + APIs + MongoDB', () => {
   let mongoServer: MongoMemoryServer;
-  const bodyRequestHuman: any = { // @TODO: Cambiar a interfaz de dna
+  const bodyRequestHuman: any = {
     dna: [
       "ATGCGA",
       "CAGTGC",
@@ -52,7 +52,7 @@ describe('Servidor Restify + APIs + MongoDB', () => {
       "TCACTG"
     ]
   };
-  const bodyRequestMutant: any = { // @TODO: Cambiar a interfaz de dna
+  const bodyRequestMutant: any = {
     dna: [
       "ATGCGA",
       "CAGTGC",

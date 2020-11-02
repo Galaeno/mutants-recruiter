@@ -41,7 +41,7 @@ describe('Servidor Fastify', () => {
 
 describe('Servidor Fastify + APIs + MongoDB', () => {
   let mongoServer: MongoMemoryServer;
-  const bodyRequestHuman: any = { // @TODO: Cambiar a interfaz de dna
+  const bodyRequestHuman: any = {
     dna: [
       "ATGCGA",
       "CAGTGC",
@@ -51,7 +51,7 @@ describe('Servidor Fastify + APIs + MongoDB', () => {
       "TCACTG"
     ]
   };
-  const bodyRequestMutant: any = { // @TODO: Cambiar a interfaz de dna
+  const bodyRequestMutant: any = {
     dna: [
       "ATGCGA",
       "CAGTGC",

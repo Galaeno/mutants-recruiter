@@ -28,6 +28,10 @@ export interface QueryResult {
  */
 export const initPersistence = async (): Promise<boolean> => {
   try {
+    // Si persistence no existe, no lo inicia
+    if (!persistence || (typeof persistence === 'string' && persistence.length === 0))
+      return true;
+
     const { default: PersistenceClass } = require(`./${persistence}`);
 
     _persistence_ = new PersistenceClass();
@@ -70,6 +74,10 @@ export const get = async (collection: string, conditions: any): Promise<QueryRes
       data: []
     };
 
+    // Si persistence no existe, no lo inicia
+    if (!persistence || (typeof persistence === 'string' && persistence.length === 0))
+      return result;
+
     if (!_persistence_)
       initPersistence();
 
@@ -99,6 +107,10 @@ export const save = async (collection: string, data: any): Promise<QueryResult> 
       count: 0,
       data: []
     };
+
+    // Si persistence no existe, no lo inicia
+    if (!persistence || (typeof persistence === 'string' && persistence.length === 0))
+      return result;
 
     if (!_persistence_)
       initPersistence();

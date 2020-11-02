@@ -5,6 +5,8 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 import { createServer } from '../../src/infrastructure/server/server';
 import ServerExpress from '../../src/infrastructure/server/express';
 
+import { LivingBeing } from '../../src/domain/livingBeing';
+
 const PORT: number = 3000;
 
 describe('Servidor Express', () => {
@@ -42,7 +44,7 @@ describe('Servidor Express', () => {
 
 describe('Servidor Express + APIs + MongoDB', () => {
   let mongoServer: MongoMemoryServer;
-  const bodyRequestHuman: any = { // @TODO: Cambiar a interfaz de dna
+  const bodyRequestHuman: any = {
     dna: [
       "ATGCGA",
       "CAGTGC",
@@ -52,7 +54,7 @@ describe('Servidor Express + APIs + MongoDB', () => {
       "TCACTG"
     ]
   };
-  const bodyRequestMutant: any = { // @TODO: Cambiar a interfaz de dna
+  const bodyRequestMutant: any = {
     dna: [
       "ATGCGA",
       "CAGTGC",
