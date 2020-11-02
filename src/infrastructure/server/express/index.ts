@@ -6,10 +6,18 @@ import bodyParser from 'body-parser';
 import { Server } from '../server';
 import { Router, routes } from '../../routes';
 
-
+/*
+ * Clase representa a un servidor ServerExpress
+ *
+ * @extends { Server }
+ * @implements { Router} 
+ */
 class ServerExpress extends Server implements Router {
   public app: Express;
 
+  /*
+   * Crea un ServerExpress
+   */
   constructor () {
     super();
     this.app = express();
@@ -17,20 +25,42 @@ class ServerExpress extends Server implements Router {
     this.initRoutes();
   }
 
+  /*
+   * Inicia un servidor
+   *
+   * @param { number | string } port - Puerto al cual conectarse
+   *
+   * @return { Promise<void> }
+   */
   public async start (port: number | string): Promise<void> {
     this.server = await this.app.listen(port);
   }
 
+  /*
+   * Inicia los middlewares
+   *
+   * @return { void }
+   */
   private initMiddlewares (): void {
     this.app.use(bodyParser.json());
     this.app.use(bodyParser.urlencoded({ extended: false }));
   }
 
+  /*
+   * Inicia las rutas
+   *
+   * @return { void }
+   */
   public initRoutes(): void {
     this.get();
     this.post();
   }
 
+  /*
+   * Manejo de rutas de metodo GET
+   *
+   * @return { void }
+   */
   public get (): void {
     this.app.get('/stats', routes.stats.get);
 
@@ -48,6 +78,11 @@ class ServerExpress extends Server implements Router {
     );
   }
   
+  /*
+   * Manejo de rutas de metodo POST
+   *
+   * @return { void }
+   */
   public post (): void {
     this.app.post('/mutant/', routes.mutants.save);
 

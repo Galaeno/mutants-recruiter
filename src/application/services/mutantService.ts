@@ -10,10 +10,14 @@ const {
 } = application;
 
 /*
- * Función que valida si un DNA es mutante o no
+ * Función que valida si un ADN es mutante o no
+ *
+ * @param { string[] } dna - Cadena de ADN
+ *
+ * @return { boolean }
  */
 export const isMutant = (dna: string[]): boolean => {
-  if (dna) {
+  if (dna && Array.isArray(dna) && dna.length > 0) {
     let count = 0;
 
     // Obtiene las secuencias para las filas
@@ -39,9 +43,9 @@ export const isMutant = (dna: string[]): boolean => {
  * Si recibe ['ABCD', 'ABCD', 'ABCD']
  * debería devolver ['AAA', 'BBB', 'CCC', 'DDD']
  * 
- * @dna: string[]
+ * @param { string[] } dna - Cadena de ADN
  * 
- * @return string[]
+ * @return { string[] } - Cadena de ADN
  */
 const getColumns = (dna: string[]): string[] => {
   const newOrder: string[] = [];
@@ -68,9 +72,9 @@ const getColumns = (dna: string[]): string[] => {
  * Si recibe ['ABCD', 'ABCD', 'ABCD']
  * debería devolver ['A', 'AB', 'ABC', 'BCD', 'CD', 'D']
  * 
- * @dna: string[]
+ * @param { string[] } dna - Cadena de ADN
  * 
- * @return string[]
+ * @return { string[] } - Cadena de ADN
  */
 const getDiagonals = (dna: string[]): string[] => {
   const newOrder: string[] = [];
@@ -97,6 +101,10 @@ const getDiagonals = (dna: string[]): string[] => {
 
 /*
  * Funcion para obtener las secuencias de una cadena de ADN
+ * 
+ * @param { string[] } orderedDna - Cadena de ADN
+ * 
+ * @return { number } - Cantidad de secuencias encontradas
  */
 const getDNASequences = (orderedDna: string[]): number => {
   let count = 0;
@@ -131,6 +139,14 @@ const getDNASequences = (orderedDna: string[]): number => {
 
 /*
  * Funcion para obtener las secuencias de una cadena de ADN
+ *
+ * @param { LivingBeingModel } livingBeing - Objeto que tendrá la información del ADN y qué tipo de ADN es. 
+ *
+ * @return { Promise<MethodResponse> } - Retorna un objeto indicando si se logró persistir la información:
+ *                                        {
+ *                                          error: false,
+ *                                          message?: ''
+ *                                        }
  */
 export const saveDna = async (livingBeing: LivingBeingModel): Promise<MethodResponse> => {
   try {

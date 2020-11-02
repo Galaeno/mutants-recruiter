@@ -12,7 +12,16 @@ import { QueryResult } from '../../persistence';
 // Modelos
 import LivingBeingModel from './models/livingBeingModel';
 
+/*
+ * Clase representa a la base Mongo
+ */
 export default class Mongo {
+
+  /*
+   * Funcion para conectar con MongoDB
+   *
+   * @return { Promise<typeof mongoose> } - Retorna la instancia de conexión
+   */
   private async connect (): Promise<typeof mongoose> {
     try {
       return await mongoose.connect(DB_URI, {
@@ -25,14 +34,31 @@ export default class Mongo {
     }
   }
 
+  /*
+   * Funcion para desconectar de MongoDB
+   *
+   * @return { Promise<void> }
+   */
   private async disconnect (): Promise<void> {
     try {
-      return await mongoose.disconnect();
+      await mongoose.disconnect();
     } catch (err) {
       throw new Error(err.message);
     }
   }
 
+  /*
+   * Funcion para manejar las queries de obtencion de información de la base de datos
+   *
+   * @param { string } collection - Nombre de la colección a utilizar
+   * @param { any } conditions - Condiciones a ejecutar en la query/consulta
+   *
+   * @return { Promise<QueryResult> } - Retorna un objeto indicando la cantidad de elementos y su información:
+   *                                        {
+   *                                          count: 0,
+   *                                          data: []
+   *                                        }
+   */
   public async get (collection: string, conditions: any): Promise<QueryResult> {
     try {
       const response: QueryResult = {
@@ -52,6 +78,18 @@ export default class Mongo {
     }
   }
 
+  /*
+   * Funcion para manejar las queries de guardado de información en la base de datos
+   *
+   * @param { string } collection - Nombre de la colección a utilizar
+   * @param { any } data - Información a almacenar
+   *
+   * @return { Promise<QueryResult> } - Retorna un objeto indicando la cantidad de elementos y su información:
+   *                                        {
+   *                                          count: 0,
+   *                                          data: []
+   *                                        }
+   */
   public async save (collection: string, data: any): Promise<QueryResult> {
     try {
       const response: QueryResult = {
@@ -72,6 +110,13 @@ export default class Mongo {
   }
 }
 
+/*
+ * Función para obtener el modelo a utilizar
+ *
+ * @param { string } collection - Nombre de la colección a utilizar
+ *
+ * @return { Model<Document> } - Retorna el Modelo a utilizar
+ */
 const getModel = (collection: string): Model<Document> => {
   // Dependiendo la colección, qué modelo carga
   switch (collection) {

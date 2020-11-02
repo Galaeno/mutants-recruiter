@@ -5,7 +5,17 @@ import restify, { Server as RestServer, plugins, Request, Response, Next } from 
 import { Server } from '../server';
 import { Router, routes } from '../../routes';
 
+/*
+ * Clase representa a un servidor ServerRestify
+ *
+ * @extends { Server }
+ * @implements { Router} 
+ */
 class ServerRestify extends Server implements Router {
+
+  /*
+   * Crea un ServerRestify
+   */
   constructor () {
     super();
 
@@ -15,15 +25,30 @@ class ServerRestify extends Server implements Router {
     this.initRoutes();
   }
 
+  /*
+   * Inicia los middlewares
+   *
+   * @return { void }
+   */
   private initMiddlewares (): void {
     this.server.use(plugins.bodyParser());
   }
   
+  /*
+   * Inicia las rutas
+   *
+   * @return { void }
+   */
   public initRoutes(): void {
     this.get();
     this.post();
   }
 
+  /*
+   * Manejo de rutas de metodo GET
+   *
+   * @return { void }
+   */
   public get (): void {
     this.server.get('/stats', (req: Request, res: Response, next: Next) => {
       req.query = req.query()
@@ -44,6 +69,11 @@ class ServerRestify extends Server implements Router {
     );
   }
   
+  /*
+   * Manejo de rutas de metodo POST
+   *
+   * @return { void }
+   */
   public post (): void {
     this.server.post('/mutant/', routes.mutants.save);
 

@@ -14,13 +14,24 @@ const {
   dnaStrictMode
 } = application;
 
+/*
+ * Función que validará si un ADN es válido en base a sus dimensiones, valores, etc
+ *
+ * @param { string[] } dna - Cadena de ADN
+ *
+ * @return { DnaValidator } - Retorna un objeto indicando si el adn es valido o no:
+ *                            {
+ *                              dnaOk: true,
+ *                              message?: '' 
+ *                            }
+ */
 export const dnaValidator = (dna: string[]): DnaValidator => {
   const result: DnaValidator = {
     dnaOk: true
   };
 
   // Si no viene adn o viene vacio, retorna que no es válido
-  if (dna && dna.length > 0) {
+  if (dna && Array.isArray(dna) && dna.length > 0) {
 
     // Si no esta en strict mode = false, retorna true porque no valida
     if (!dnaStrictMode) 
@@ -62,6 +73,13 @@ export const dnaValidator = (dna: string[]): DnaValidator => {
   return result;
 }
 
+/*
+ * Chequea que la longitud de todos los valores sean los mismos
+ *
+ * @param { string[] } dna - Cadena de ADN
+ *
+ * @return { boolean }
+ */
 const checkLengthValues = (dna: string[]): boolean => {
   // Obtiene la cantidad de total de valores en las cadenas
   const dnaLengths: number[] = dna.map((i) => i.length);
@@ -79,6 +97,13 @@ const checkLengthValues = (dna: string[]): boolean => {
   }
 }
 
+/*
+ * Chequea que no existan caracteres en las cadenas de ADN no permitidos
+ *
+ * @param { string[] } dna - Cadena de ADN
+ *
+ * @return { boolean }
+ */
 const checkDifferentCharacters = (dna: string[]): boolean => {
   // Recorre cada item del ADN y por cada item, lo separa en caracteres a cada string.
   // Este array generado, recorre cada item buscando que todos los carácteres coincidan con dnaWords

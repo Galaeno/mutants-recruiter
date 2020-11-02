@@ -20,6 +20,11 @@ import { INFO, ERROR } from './shared/logger';
 // Configuración inicial
 dotenv.config();
 
+/*
+ * Funcion que inicia la aplicacion
+ *
+ * @return Promise<void>
+ */
 const init = async (): Promise<void> => {
   try {
     // Inicia manejadores de errores
@@ -45,12 +50,14 @@ const init = async (): Promise<void> => {
   }
 };
 
-const finish = ():void => {
+/*
+ * Funcion que finaliza la aplicacion
+ *
+ * @return void
+ */
+const finish = (): void => {
   INFO('--[ Deteniendo aplicación ]--')
   process.exit(1);
 };
-
-// Manejo de errores
-
 
 init();

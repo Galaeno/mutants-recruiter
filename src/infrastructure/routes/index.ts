@@ -5,6 +5,11 @@ import path from 'path';
 // Constantes
 const SUFFIX_FILE = 'Routes';
 
+/*
+ * Obtiene las rutas a utilizar
+ *
+ * @return { Object } - Retorna un objeto con todas las rutas a utilizar
+ */
 const getRoutes = (): any => {
   // Obtiene la ruta de rutas
   const routesFiles: string[] = glob.sync(path.normalize(path.join(`${__dirname}/*`)));

@@ -8,6 +8,14 @@ import { MutantValidator } from '../../domain/mutant';
 // Shared
 import { MethodResponse } from '../../shared/interfaces/app';
 
+/*
+ * Función para manejar la ruta de la peticion para saber si una cadena de ADN es mutante o no
+ *
+ * @param { Request } req - Petición del cliente
+ * @param { Response } res - Respuesta al cliente
+ *
+ * @return { Promise<void> }
+ */
 export const save = async (req: any, res: any): Promise<void> => {
   try {
     const dna = req.body?.dna;

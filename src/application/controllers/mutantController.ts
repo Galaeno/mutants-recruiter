@@ -9,6 +9,17 @@ import Mutant, { MutantValidator } from '../../domain/mutant';
 import { LIVING_BEING_TYPES } from '../../shared/constants/config';
 import { LivingBeingModel } from '../../infrastructure/persistence';
 
+/*
+ * Función que manejara el chequeo del ADN de un ser vivo para determinar si es mutante o no
+ *
+ * @param { string[] } dna - Cadena de ADN
+ *
+ * @return { Promise<MutantValidator> } - Retorna un objeto indicando si es mutante o no y si el adn es válido o no:
+ *                                        {
+ *                                          isMutant: true,
+ *                                          dnaOk: true
+ *                                        }
+ */
 export const mutantValidator = async (dna: string[]): Promise<MutantValidator> => {
   try {
     const ret: MutantValidator = {
