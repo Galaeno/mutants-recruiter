@@ -12,7 +12,7 @@ check-environment:
   only:
   - pushes
 
-test-back:
+tests:
   stage: tests
   dependencies:
   - check-environment
