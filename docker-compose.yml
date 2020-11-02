@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
     environment:
       PORT: "${PORT}"
-      MONGO_URI: "${DB_URI}"
+      DB_URI: "${DB_URI}"
     ports:
       - "${PORT}:${PORT}"
     volumes:

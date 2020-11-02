@@ -1,34 +1,56 @@
 // Dependencias externas
 import * as dotenv from 'dotenv';
 
-// Dependencias internas
-import { createServer } from './server/Server';
-import { PORT } from './utils/constants/app';
-import { SERVER } from './utils/constants/config';
+// Servidor
+import { Server, createServer } from './infrastructure/server/server';
+
+// Persistencia
+import { initPersistence, finishPersistence } from './infrastructure/persistence';
+
+// Constantes
+import { PORT } from './shared/constants/app';
+import { SERVER } from './shared/constants/config';
+
+// Errores
+import errorHandler from './shared/errorHandler';
+
+// Logger
+import { INFO, ERROR } from './shared/logger';
 
 // Configuración inicial
 dotenv.config();
 
 const init = async (): Promise<void> => {
   try {
-    // Crea instancia de la aplicación
-    const server: any = createServer(SERVER);
+    // Inicia manejadores de errores
+    errorHandler.initUncaughtException();
+    errorHandler.initUnhandledRejection();
 
-    console.info('--[ Iniciando apliación ]--');
+    // Inicia la persistencia de la aplicación
+    await initPersistence();
+
+    // Crea instancia de la aplicación
+    const server: Server = createServer(SERVER);
+
+    INFO('--[ Iniciando apliación ]--');
 
     // Inicia servidor
     await server.start(PORT);
     
-    console.info(`Server (${SERVER}) iniciado en el puerto ${PORT}`);
+    INFO(`Server (${SERVER}) iniciado en el puerto ${PORT}`);
   } catch (err: any) {
-    console.error(err.message);
+    finishPersistence();
+    ERROR(err.message);
     finish();
-  };
+  }
 };
 
 const finish = ():void => {
-  console.info('--[ Deteniendo aplicación ]--')
+  INFO('--[ Deteniendo aplicación ]--')
   process.exit(1);
 };
+
+// Manejo de errores
+
 
 init();

@@ -1,3 +1,6 @@
+![Pipelines](https://gitlab.com/Galaeno/mutants-recruiter/badges/master/pipeline.svg)
+![Coverage](https://gitlab.com/Galaeno/mutants-recruiter/badges/master/coverage.svg)
+
 # Mutants Recruiter - Reclutador de Mutantes
 Sistema para determinar si un ADN es mutante o no.
 
@@ -45,7 +48,7 @@ Anexar una base de datos, la cual guarde los ADN’s verificados con la API.
 Solo 1 registro por ADN.  
 Exponer un servicio extra "/stats" que devuelva un Json con las estadísticas de las verificaciones de ADN:
 ```json
-{"count_mutant_dna":40, "count_human_dna":100: "ratio":0.4}
+{"count_mutant_dna":40, "count_human_dna":100, "ratio":0.4}
 ```
 Tener en cuenta que la API puede recibir fluctuaciones agresivas de tráfico (Entre 100 y 1 millón de peticiones por segundo).
 
@@ -58,30 +61,72 @@ Test-Automáticos, Code coverage > 80%.
 
 # Instalación de dependencias para desarrollo
 * [Node](https://nodejs.org/es/download/)
-* [Docker](https://www.docker.com/get-started)
-* [Docker Compose](https://docs.docker.com/compose/install/)
+* [Docker](https://www.docker.com/get-started) (Si se desea utilizar contenedores)
+* [Docker Compose](https://docs.docker.com/compose/install/) (Si se desea utilizar contenedores)
+* [MongoDB](https://docs.mongodb.com/manual/installation/)  (Si no se desea utilizar contenedores)
 
 # Configuracion
 - Se debe configurar las variables de entorno para desarrollo, para eso, se deberá crear el archivo `.env` en el directorio raiz tomando como ejemplo el archivo `.envExample`.
-- Existe un archivo de configuración llamado `appConfig.json` que es para setear cómo se quiere que la aplicación funciona en base a unos parámetros de configuración:
-```json
-{
-  "server": "Restify" // Se especifica el nombre de la libreria que será utilizada como servidor: Express, Fastify, Restify los disponibles
-}
-```
+- Existe un archivo de configuración llamado `app.config.ts` que es para setear cómo se quiere que la aplicación funciona en base a unos parámetros de configuración.
 
 # Ejecución en desarrollo
 - En ruta raíz del proyecto:
   ```bash
   npm i
   ```
-- Compilar el proyecto e iniciar el ambiente sin ver outputs:
+- [Contenedor] Compilar el proyecto e iniciar el ambiente sin ver outputs:
   ```bash
   docker-compose up --build -d
   ```
-- Compilar el proyecto e iniciar el ambiente viendo outputs:
+- [Contenedor] Compilar el proyecto e iniciar el ambiente viendo outputs:
   ```bash
   docker-compose up --build
   ```
+- [Sin Contendor] Ejecutar comando para inciar aplicacion para desarrollo:
+  ```bash
+  npm run start:dev
+  ```
 
-Éste levantará dos instancias, la de la aplicación propiamente dicha y la de base de datos que se encuentre en el archivo `docker-compose.yml`.
+Éste levantará dos instancias, la de la aplicación propiamente dicha y la de base de datos que se encuentre configurada en el archivo `.env`. Hoy el desarrollo sólo tiene Mongoose
+
+# Servidor
+La aplicación fue hosteada en heroku. La URL para acceder a las apis es:  
+https://mutants-recruiter.herokuapp.com
+
+# APIS
+## Obtención de estadísticas:
+* Metodo: GET
+* Endpoint: /
+* Parámetros: (Ninguno)
+* Respuesta:
+```json
+{
+  "isOnline": true
+}
+```
+
+## Guardado de ADN:
+* Metodo: POST
+* Endpoint: /mutant/
+* Parámetros:
+```json
+{
+  "dna": [string] Array de strings con la información de ADN
+}
+```
+* Respuestas:
+  * 200-OK: Si el ADN es Mutante.
+  * 403-Forbidden: Si el ADN no es Mutante.
+
+## Obtención de estadísticas:
+* Metodo: GET
+* Endpoint: /stats
+* Parámetros: (Ninguno)
+* Respuesta:
+```json
+{
+  "count_mutant_dna": 1,
+  "count_human_dna": 2,
+  "ratio": 0.5
+}
+```
